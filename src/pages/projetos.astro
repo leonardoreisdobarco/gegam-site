@@ -1,0 +1,49 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import PageHero from "../components/PageHero.astro";
+
+const projetos = (await getCollection("projetos")).sort(
+  (a, b) => a.data.ordem - b.data.ordem,
+);
+const corpos = await Promise.all(
+  projetos.map(async (p) => ({ p, Content: (await render(p)).Content })),
+);
+---
+
+<Layout titulo="Projetos">
+  <PageHero
+    titulo="Projetos"
+    subtitulo="Projetos de pesquisa, extensão e estudos em andamento no grupo."
+  />
+
+  <div class="mx-auto max-w-4xl space-y-6 px-4 py-14">
+    {
+      corpos.length === 0 && (
+        <p class="text-white/60">Nenhum projeto cadastrado ainda.</p>
+      )
+    }
+    {
+      corpos.map(({ p, Content }) => (
+        <article class="rounded-xl border border-white/10 bg-surface p-6">
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="rounded-full bg-brand/15 px-2.5 py-0.5 text-xs font-medium text-brand">
+              {p.data.status}
+            </span>
+            {p.data.linha && (
+              <span class="text-xs text-white/40">{p.data.linha}</span>
+            )}
+          </div>
+          <h2 class="mt-2 text-xl font-bold text-white">{p.data.titulo}</h2>
+          {p.data.responsavel && (
+            <p class="mt-1 text-sm text-white/50">Responsável: {p.data.responsavel}</p>
+          )}
+          <p class="mt-3 text-white/70">{p.data.resumo}</p>
+          <div class="prose-gegam mt-3 text-sm text-white/60">
+            <Content />
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</Layout>

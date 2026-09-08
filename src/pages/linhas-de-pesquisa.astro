@@ -1,0 +1,26 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHero from "../components/PageHero.astro";
+import { linhasDePesquisa } from "../data/site";
+---
+
+<Layout titulo="Linhas de pesquisa">
+  <PageHero
+    titulo="Linhas de pesquisa"
+    subtitulo="As frentes de estudo e atuação do grupo."
+  />
+
+  <div class="mx-auto max-w-4xl space-y-4 px-4 py-14">
+    {
+      linhasDePesquisa.map((l) => (
+        <section
+          id={l.slug}
+          class="scroll-mt-24 rounded-xl border border-white/10 bg-surface p-6"
+        >
+          <h2 class="text-xl font-bold text-brand">{l.titulo}</h2>
+          <p class="mt-2 text-white/70">{l.resumo}</p>
+        </section>
+      ))
+    }
+  </div>
+</Layout>

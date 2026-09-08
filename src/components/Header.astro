@@ -1,0 +1,61 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/logo-gegam.png";
+import { navLinks, site } from "../data/site";
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === "/" ? path === "/" : path.startsWith(href);
+---
+
+<header class="sticky top-0 z-50 border-b border-white/10 bg-ink/90 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
+    <a href="/" class="flex items-center gap-3">
+      <Image src={logo} alt="GEGAM" width={44} height={44} class="h-11 w-11" />
+      <span class="hidden text-sm font-semibold tracking-wide sm:block">
+        {site.nome}
+        <span class="block text-xs font-normal text-white/50">{site.instituicao}</span>
+      </span>
+    </a>
+
+    <nav class="hidden items-center gap-1 md:flex">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class:list={[
+              "rounded-md px-3 py-2 text-sm transition-colors",
+              isActive(link.href)
+                ? "bg-brand/15 text-brand"
+                : "text-white/70 hover:bg-white/5 hover:text-white",
+            ]}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <details class="relative md:hidden">
+      <summary class="flex cursor-pointer list-none items-center rounded-md border border-white/15 p-2">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </summary>
+      <div class="absolute right-0 mt-2 w-52 rounded-lg border border-white/10 bg-surface p-1 shadow-xl">
+        {
+          navLinks.map((link) => (
+            <a
+              href={link.href}
+              class:list={[
+                "block rounded-md px-3 py-2 text-sm",
+                isActive(link.href) ? "text-brand" : "text-white/80 hover:bg-white/5",
+              ]}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
+    </details>
+  </div>
+</header>

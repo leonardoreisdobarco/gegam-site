@@ -1,0 +1,35 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHero from "../components/PageHero.astro";
+import { site } from "../data/site";
+---
+
+<Layout titulo="Contato">
+  <PageHero titulo="Contato" subtitulo="Fale com o GEGAM." />
+
+  <div class="mx-auto max-w-3xl space-y-6 px-4 py-14">
+    <div class="grid gap-4 sm:grid-cols-2">
+      <a
+        href={`mailto:${site.email}`}
+        class="rounded-xl border border-white/10 bg-surface p-6 transition hover:border-brand/40"
+      >
+        <p class="text-sm text-white/50">E-mail</p>
+        <p class="mt-1 font-semibold text-brand">{site.email}</p>
+      </a>
+      <a
+        href={site.instagram}
+        target="_blank"
+        rel="noopener"
+        class="rounded-xl border border-white/10 bg-surface p-6 transition hover:border-brand/40"
+      >
+        <p class="text-sm text-white/50">Instagram</p>
+        <p class="mt-1 font-semibold text-brand">@gegam.ifmuz</p>
+      </a>
+    </div>
+
+    <div class="rounded-xl border border-white/10 bg-surface p-6">
+      <p class="text-sm text-white/50">Onde estamos</p>
+      <p class="mt-1 text-white/80">{site.campusEndereco}</p>
+    </div>
+  </div>
+</Layout>

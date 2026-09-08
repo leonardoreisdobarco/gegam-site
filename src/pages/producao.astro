@@ -1,0 +1,47 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import PageHero from "../components/PageHero.astro";
+
+const itens = (await getCollection("producao")).sort(
+  (a, b) => b.data.ano - a.data.ano,
+);
+---
+
+<Layout titulo="Produção">
+  <PageHero
+    titulo="Produção acadêmica"
+    subtitulo="Publicações, TCCs, resumos e apresentações de membros do grupo."
+  />
+
+  <div class="mx-auto max-w-4xl px-4 py-14">
+    {itens.length === 0 && <p class="text-white/60">Nada cadastrado ainda.</p>}
+    <ul class="divide-y divide-white/10">
+      {
+        itens.map((i) => (
+          <li class="py-5">
+            <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <span class="rounded bg-white/10 px-2 py-0.5 text-xs uppercase text-white/60">
+                {i.data.tipo}
+              </span>
+              <span class="text-sm text-white/40">{i.data.ano}</span>
+            </div>
+            <h2 class="mt-1 font-semibold text-white">
+              {i.data.link ? (
+                <a href={i.data.link} target="_blank" rel="noopener" class="hover:text-brand">
+                  {i.data.titulo}
+                </a>
+              ) : (
+                i.data.titulo
+              )}
+            </h2>
+            <p class="text-sm text-white/60">{i.data.autores}</p>
+            {i.data.veiculo && (
+              <p class="text-sm italic text-white/40">{i.data.veiculo}</p>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Layout>

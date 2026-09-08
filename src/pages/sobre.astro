@@ -1,0 +1,65 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHero from "../components/PageHero.astro";
+import { site, coordenacao } from "../data/site";
+---
+
+<Layout titulo="Sobre">
+  <PageHero
+    titulo="Sobre o GEGAM"
+    subtitulo="Quem somos, o que fazemos e com quem trabalhamos."
+  />
+
+  <div class="mx-auto max-w-3xl space-y-10 px-4 py-14 text-white/80">
+    <section>
+      <h2 class="text-xl font-bold text-white">O grupo</h2>
+      <p class="mt-3">
+        O {site.nomeCompleto} ({site.nome}) é um grupo de estudos do
+        {site.instituicao}. Reúne estudantes e docentes interessados em
+        geotecnologias aplicadas à agricultura e ao meio ambiente:
+        sensoriamento remoto, agricultura digital, uso de drones (VANTs) e
+        topografia/georreferenciamento.
+      </p>
+      <p class="mt-3">
+        <em class="text-white/50"
+          >Texto provisório — substituir pelo histórico e pelos objetivos
+          oficiais do grupo.</em
+        >
+      </p>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-bold text-white">O que fazemos</h2>
+      <ul class="mt-3 list-disc space-y-1 pl-5">
+        <li>Encontros de estudo, palestras e oficinas (topografia, georreferenciamento, drones).</li>
+        <li>Pesquisa de campo e projetos aplicados.</li>
+        <li>Apoio a TCCs e publicações acadêmicas.</li>
+        <li>Divulgação científica e organização de eventos.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-bold text-white">Coordenação 2026/27</h2>
+      <p class="mt-1 text-sm text-white/50">
+        Nomes a confirmar — atualizar em <code>src/data/site.ts</code>.
+      </p>
+      <div class="mt-4 grid gap-3 sm:grid-cols-2">
+        {
+          coordenacao.map((c) => (
+            <div class="rounded-lg border border-white/10 bg-surface p-4">
+              <p class="font-semibold text-white">{c.nome}</p>
+              <p class="text-sm text-brand">{c.cargo}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-bold text-white">Parcerias</h2>
+      <p class="mt-3 text-white/60">
+        <em>A definir — listar laboratórios, cursos e instituições parceiras.</em>
+      </p>
+    </section>
+  </div>
+</Layout>

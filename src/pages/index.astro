@@ -1,0 +1,117 @@
+---
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import logo from "../assets/logo-gegam.png";
+import { site, linhasDePesquisa } from "../data/site";
+
+const projetos = (await getCollection("projetos")).sort(
+  (a, b) => a.data.ordem - b.data.ordem,
+);
+const destaques = projetos.slice(0, 3);
+---
+
+<Layout>
+  <!-- Hero -->
+  <section class="relative overflow-hidden border-b border-white/10">
+    <div
+      class="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-brand/20 blur-3xl"
+    >
+    </div>
+    <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:py-24 md:grid-cols-[1.2fr_1fr]">
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-widest text-brand">
+          {site.instituicao}
+        </p>
+        <h1 class="mt-3 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl">
+          {site.nomeCompleto}
+        </h1>
+        <p class="mt-5 max-w-xl text-lg text-white/70">
+          {site.descricaoCurta}
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a
+            href="/participe"
+            class="rounded-lg bg-brand px-5 py-3 text-sm font-semibold text-ink transition hover:bg-brand-dark"
+          >
+            Quero participar
+          </a>
+          <a
+            href="/projetos"
+            class="rounded-lg border border-white/20 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/5"
+          >
+            Ver projetos
+          </a>
+        </div>
+      </div>
+      <div class="flex justify-center">
+        <Image
+          src={logo}
+          alt="Logo do GEGAM"
+          width={320}
+          height={320}
+          class="w-56 sm:w-72"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Processo seletivo -->
+  <section class="border-b border-white/10 bg-brand/10">
+    <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-6">
+      <p class="text-sm text-white/80">
+        <span class="font-semibold text-brand">Processo seletivo:</span>
+        acompanhe as chamadas para novos membros no Instagram ou na página Participe.
+      </p>
+      <a href="/participe" class="text-sm font-semibold text-brand hover:underline"
+        >Saiba como entrar →</a
+      >
+    </div>
+  </section>
+
+  <!-- Linhas de pesquisa -->
+  <section class="mx-auto max-w-6xl px-4 py-16">
+    <h2 class="text-2xl font-bold tracking-tight">Linhas de pesquisa</h2>
+    <p class="mt-2 text-white/60">Frentes de estudo e atuação do grupo.</p>
+    <div class="mt-8 grid gap-4 sm:grid-cols-2">
+      {
+        linhasDePesquisa.map((l) => (
+          <a
+            href={`/linhas-de-pesquisa#${l.slug}`}
+            class="rounded-xl border border-white/10 bg-surface p-6 transition hover:border-brand/40 hover:bg-surface-2"
+          >
+            <h3 class="font-semibold text-brand">{l.titulo}</h3>
+            <p class="mt-2 text-sm text-white/60">{l.resumo}</p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Projetos em destaque -->
+  {
+    destaques.length > 0 && (
+      <section class="border-t border-white/10 bg-surface">
+        <div class="mx-auto max-w-6xl px-4 py-16">
+          <div class="flex items-end justify-between">
+            <h2 class="text-2xl font-bold tracking-tight">Projetos em destaque</h2>
+            <a href="/projetos" class="text-sm text-brand hover:underline">
+              Ver todos →
+            </a>
+          </div>
+          <div class="mt-8 grid gap-4 md:grid-cols-3">
+            {destaques.map((p) => (
+              <article class="rounded-xl border border-white/10 bg-ink p-6">
+                <span class="text-xs uppercase tracking-wide text-white/40">
+                  {p.data.status}
+                </span>
+                <h3 class="mt-1 font-semibold">{p.data.titulo}</h3>
+                <p class="mt-2 text-sm text-white/60">{p.data.resumo}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+</Layout>
