@@ -18,15 +18,15 @@ const destaques = projetos.slice(0, 3);
       class="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-brand/20 blur-3xl"
     >
     </div>
-    <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:py-24 md:grid-cols-[1.2fr_1fr]">
-      <div>
+    <div class="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-16 sm:py-24 md:flex-row md:items-center">
+      <div class="min-w-0 flex-1">
         <p class="text-sm font-semibold uppercase tracking-widest text-brand">
           {site.instituicao}
         </p>
-        <h1 class="mt-3 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl">
+        <h1 class="mt-3 text-[1.75rem] font-extrabold leading-tight tracking-tight break-words hyphens-auto sm:text-4xl md:text-5xl">
           {site.nomeCompleto}
         </h1>
-        <p class="mt-5 max-w-xl text-lg text-white/70">
+        <p class="mt-5 max-w-xl text-lg text-white/70 break-words">
           {site.descricaoCurta}
         </p>
         <div class="mt-8 flex flex-wrap gap-3">
@@ -44,13 +44,13 @@ const destaques = projetos.slice(0, 3);
           </a>
         </div>
       </div>
-      <div class="flex justify-center">
+      <div class="flex shrink-0 justify-center self-center">
         <Image
           src={logo}
           alt="Logo do GEGAM"
           width={320}
           height={320}
-          class="w-56 sm:w-72"
+          class="w-52 sm:w-72"
         />
       </div>
     </div>
